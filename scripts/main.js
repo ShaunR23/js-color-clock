@@ -15,9 +15,9 @@
    let time = hrs + ':'+ min + ':' + secs;
 
     let display = document.querySelector('.clock-display')
-   //  document.querySelector('.clock-display').innerText = time;
+   
     display.textContent = time;
-   // let change = document.querySelector('.clock-display').innerText= hexColor
+   
    display.addEventListener('mouseover', () => {
       display.textContent =  hexColor;
   })
