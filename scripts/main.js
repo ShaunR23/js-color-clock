@@ -1,39 +1,63 @@
+(function () {
+   'use strict';
+
+   let display = document.querySelector('.clock-display');
+   // let clock = document.querySelector('.clock');
+   let isHover = false;
 
 
- function currentTime() {
-    let date = new Date(); 
-    let hrs = date.getHours();
-    let min= date.getMinutes();
-    let secs= date.getSeconds();
+   display.addEventListener('mouseover', (e) => {
+      isHover = true;
+   });
 
-    hrs = hrs < 10 ? "0" + hrs : hrs;
-    min = min < 10 ? "0" + min : min;
-    secs = secs < 10 ? "0" + secs : secs;
+   display.addEventListener('mouseout', (e) => {
+      isHover = false;
+   });
 
-    let hexColor = '#' + hrs + min + secs.toString(16);
-   
-    
-   let time = hrs + ':'+ min + ':' + secs;
+   setInterval(currentTime, 1000);
 
-    let display = document.querySelector('.clock-display')
-   
-    display.textContent = time;
-   
-    //need to change to true/false eventListener, use if else for hexColor and time display for : in hex value
-   display.addEventListener('mouseover', () => {
-      display.textContent =  hexColor;
-  })
-  display.addEventListener('mouseout', () => {
-   display.textContent =  time;
-})
+   function currentTime() {
+      let date = new Date();
+      let hrs, min, secs;
 
-    let pro = (secs/60)*14
-    document.querySelector('.clock-progress-bar').style.width = pro + 'rem'
-    document.querySelector('.clock').style.backgroundColor= hexColor 
-    
- }
+      if(isHover) {
+          // let hexColor = '#' + hrs + ':' + min + ':' + secs.toString(16);
+          hrs = date.getHours().toString(16);
+          min = date.getMinutes().toString(16);
+          secs = date.getSeconds().toString(16);
+        
+      } else {
+         hrs = date.getHours().toString();
+         min = date.getMinutes().toString();
+         secs = date.getSeconds().toString();
+        
+      }
 
-currentTime()
+      hrs = hrs.length < 2 ? "0" + hrs : hrs;
+      min = min.length < 2 ? "0" + min : min;
+      secs = secs.length < 2 ? "0" + secs : secs;
 
- setInterval(currentTime, 1000)
+      // secs = ("0" + date.getSeconds()).slice(-2);
+      
+      let time = hrs + ':' + min + ':' + secs;
 
+      display.textContent = time;
+
+
+      //need to change to true/false eventListener, use if else for hexColor and time display for : in hex value
+      // if (isHover === true) {
+      //    display.textContent = hexColor
+      // } else {
+      //    display.textContent = time
+      // }
+      
+
+      let progress = (secs / 60) * 14
+      document.querySelector('.clock-progress-bar').style.width = progress + 'rem';
+      document.querySelector('.clock').style.backgroundColor = hexColor;
+
+   }
+
+   currentTime();
+
+})();
